@@ -15,12 +15,12 @@ from gredis.client import AsyncRedis
 
 
 class GRedisTest(AsyncTestCase):
+
+    # NOTE: Make sure to launch a Redis docker container and port forward 6379 before running the tests.
+    # $ docker run -d  -p 6379:6379 --name gredis-test redis
     def setUp(self):
         super(GRedisTest, self).setUp()
-        self.client = AsyncRedis(
-            "192.168.1.50", 6379, encoding="utf8",
-            decode_responses=True,
-        )
+        self.client = AsyncRedis(decode_responses=True)
 
     @gen_test
     def test_get_set(self):

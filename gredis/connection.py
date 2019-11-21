@@ -185,8 +185,7 @@ class AsyncParser(PythonParser):
 class AsyncConnection(Connection, TCPClient):
     def __init__(self, *args, **kwargs):
 
-        TCPClient.__init__(self, kwargs.pop("resolver", None),
-                           kwargs.pop("io_loop", None))
+        TCPClient.__init__(self, kwargs.pop("resolver", None))
 
         Connection.__init__(self, parser_class=AsyncParser, *args, **kwargs)
 
@@ -307,8 +306,7 @@ class AsyncConnection(Connection, TCPClient):
             self.host, self.port, self.db, self.password, self.socket_timeout,
             self.socket_connect_timeout, self.socket_keepalive,
             self.socket_keepalive_options, self.retry_on_timeout,
-            self.encoding, self.encoding_errors, self.decode_responses,
-            DefaultParser, socket_read_size)
+            parser_class=DefaultParser, socket_read_size=socket_read_size)
 
         conn._sock = self._stream.socket
         return conn
